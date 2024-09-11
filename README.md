@@ -1,13 +1,60 @@
 # Clerk PHP SDK
 
-This PHP SDK provides a convenient way to interact with the Clerk API in your PHP applications. It covers a wide range of Clerk's functionalities including user management, organization management, authentication, and more.
+This PHP SDK provides a convenient way to interact with the Clerk API in your PHP applications. It covers the full range of [Clerk's Backend API](https://clerk.com/docs/reference/backend-api) (BAPI) capabilities, including user management, organization management, authentication, and more.
 
 ## Installation
+
+### Option 1: Using Composer 
 
 You can install the Clerk PHP SDK via Composer:
 
 ```bash
 composer require clerk/clerk-sdk-php
+```
+
+Then, in your PHP script, you can include the autoloader:
+
+```php
+require 'vendor/autoload.php';
+```
+
+### Option 2: Manual Installation
+
+If you prefer not to use Composer, you can manually include the SDK in your project:
+
+1. Download the SDK files from the [GitHub repository](https://github.com/drewwilson/clerk-php-sdk).
+
+2. Extract the files into your project directory. For example, you might put them in a `clerk-sdk-php` folder.
+
+3. In your PHP script, include the `ClerkSDKLoader.php` file:
+
+```php
+require_once 'path/to/clerk-sdk-php/ClerkSDKLoader.php';
+```
+
+This loader file will handle including all necessary SDK files for you, making manual installation much simpler.
+
+## Usage
+
+Here's a basic example of how to use the SDK:
+
+```php
+<?php
+
+// If using Composer:
+require 'vendor/autoload.php';
+
+// If using manual installation:
+require_once 'path/to/clerk-sdk-php/ClerkSDKLoader.php';
+
+////////
+
+use Clerk\ClerkClient;
+
+// Create the Clerk client instance
+$clerk = ClerkClient::createInstance();
+
+// Now you can use various methods provided by the SDK
 ```
 
 ## Configuration
@@ -22,23 +69,6 @@ Alternatively, you can set it in your PHP code (though this is less secure and n
 
 ```php
 putenv("CLERK_SECRET_KEY=your_secret_key_here");
-```
-
-## Usage
-
-Here's a basic example of how to use the SDK:
-
-```php
-<?php
-
-require 'vendor/autoload.php';
-
-use Clerk\ClerkClient;
-
-// Create the Clerk client instance
-$clerk = ClerkClient::createInstance();
-
-// Now you can use various methods provided by the SDK
 ```
 
 ### Examples
