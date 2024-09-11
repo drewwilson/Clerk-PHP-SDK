@@ -5,6 +5,7 @@
 
 require_once __DIR__ . '/ClerkClient.php';
 require_once __DIR__ . '/Validator.php';
+require_once __DIR__ . '/SessionVerifier.php';
 
 // Endpoint files
 $endpointFiles = [

@@ -152,6 +152,63 @@ Each of these methods returns an object that provides further methods to interac
 
 For more detailed information about each endpoint and its available methods, please refer to the [Clerk API Documentation](https://clerk.com/docs/reference/backend-api).
 
+## Session Verification
+
+The Clerk PHP SDK includes a `SessionVerifier` utility class that allows you to verify session tokens. This verifier supports two methods of verification:
+
+1. Using a JWT key (faster, networkless)
+2. Using JSON Web Key Set (JWKS) (fetched from your Clerk account)
+
+### Using the SessionVerifier
+
+To use the `SessionVerifier`, follow these steps:
+
+1. First, make sure you have initialized the Clerk client:
+
+```php
+use Clerk\ClerkClient;
+
+$clerk = ClerkClient::createInstance();
+```
+
+2. Then, use the `SessionVerifier` to verify a session token:
+
+```php
+use Clerk\Util\SessionVerifier;
+
+try {
+    $sessionToken = 'your_session_token_here'; // This should be obtained from the Clerk cookie
+    $result = SessionVerifier::verifySession($sessionToken, $clerk);
+    
+    $userId = $result['user_id'];
+    $isBanned = $result['user_banned'];
+    $claims = $result['claims'];
+    
+    // Use the verified session information...
+    echo "Verified user ID: " . $userId . "\n";
+    echo "User is" . ($isBanned ? "" : " not") . " banned.\n";
+    echo "Token claims: " . print_r($claims, true) . "\n";
+} catch (Exception $e) {
+    // Handle verification failure
+    echo "Session verification failed: " . $e->getMessage() . "\n";
+}
+```
+
+### JWT Key vs JWKS Verification
+
+The `SessionVerifier` will automatically choose the appropriate verification method:
+
+- If a JWT key is set (via the `CLERK_JWT_KEY` environment variable), it will use that for verification. This method is faster and does not make any network requests.
+- If no JWT key is set, it will fall back to using JWKS. This method involves an additional API call to fetch the JWKS.
+
+To use JWT key verification, set the `CLERK_JWT_KEY` environment variable:
+
+```bash
+export CLERK_JWT_KEY="your_jwt_key_here"
+```
+
+If this environment variable is not set, the verifier will automatically use JWKS verification.
+
 ## Environment Variables
 
 The Clerk PHP SDK supports the following environment variables for configuration:

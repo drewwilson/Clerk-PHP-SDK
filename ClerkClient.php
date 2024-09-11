@@ -210,27 +210,10 @@ class ClerkClient
     }
   }
 
-  public function verifyToken($token, $customJwtKey = null) {
-    $jwtKey = $customJwtKey ?? $this->jwtKey;
-
-    if (!$jwtKey) {
-      throw new Exception('JWT key is not set. Unable to verify token.');
-    }
-
-    // TODO
-    // Implement JWT verification logic here
-
-    // Placeholder implementation
-    try {
-      // JWT verification logic goes here
-      // For example, using firebase/php-jwt:
-      // $decoded = \Firebase\JWT\JWT::decode($token, $jwtKey, array('HS256'));
-      $decoded = "Placeholder for decoded token";
-      return $decoded;
-    } catch (\Exception $e) {
-      throw new Exception("Token verification failed: " . $e->getMessage());
-    }
+  public function getJwtKey(): ?string {
+    return $this->jwtKey;
   }
+
 
   public function actorTokens(): ActorTokens { return $this->actorTokens; }
   public function allowList(): AllowList { return $this->allowList; }

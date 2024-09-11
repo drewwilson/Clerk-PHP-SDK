@@ -71,7 +71,7 @@ class Validator
     if (empty($id)) {
       throw new InvalidArgumentException("{$idName} cannot be empty");
     }
-    if (!preg_match('/^[a-zA-Z0-9_-.]+$/', $id)) {
+    if (!preg_match('/^[a-zA-Z0-9_.\-]+$/', $id)) {
       throw new InvalidArgumentException("{$idName} contains invalid characters");
     }
   }
